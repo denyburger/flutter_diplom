@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_nightingales_app/screens/play_screen.dart';
-import 'package:team_nightingales_app/screens/test_screen.dart';
+import 'package:team_nightingales_app/screens/home_screen.dart';
+
+import '../home_screen.dart';
 
 class StartPage extends StatefulWidget {
   StartPage({Key key}) : super(key: key);
@@ -10,7 +12,7 @@ class StartPage extends StatefulWidget {
 }
 int _currentIndex = 0;
 final List<Widget> _children = [
-  TestPage(),
+  HomePage(),
   PlayPage(),
 ];
 
