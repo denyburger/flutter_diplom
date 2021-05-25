@@ -11,12 +11,8 @@ class _PlayPageState extends State<PlayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade300,
-       appBar: AppBar(
-         title: Text('Play Page'),
-       ),
+      backgroundColor: Colors.grey.shade500,
        body: Center(
-         
          child: Text('This is Play Page'),
        ),
     );
