@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
-import 'button_widget.dart';
+import 'package:http/http.dart' as http;
+import 'package:team_nightingales_app/screens/start_screen/start.dart';
+import '../../news_screen.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -8,8 +10,50 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
- final TextEditingController _loginController = TextEditingController();
- final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // Future login() async {
+  //   var url = "http://10.0.2.2:8000/Flutter/loginform.php";
+  //   var response = await http.post(Uri.parse(url), body: {
+  //     "username": _loginController.text,
+  //     "password": _passwordController.text
+  //   });
+  //   if (response.statusCode == 200) {
+  //     var userData = json.decode(response.body);
+  //     if (userData == "Ошибка") {
+  //       showDialog(
+  //           context: (context),
+  //           builder: (context) => AlertDialog(
+  //                 title: Text('Сообщение'),
+  //                 content: Text('Логин и пароль неверны'),
+  //                 actions: <Widget>[
+  //                   MaterialButton(color: Colors.black54,
+  //                   onPressed: () {
+  //                     Navigator.pop(context);
+  //                   },child: Text("Закрыть"),)
+  //                 ],
+  //               ));
+  //     }
+  //     else{
+  //       if(userData ['role'] == 'Admin'){
+  //         Navigator.push(context, MaterialPageRoute(builder: (context) => NewsPage()));
+  //       }
+  //       showDialog(
+  //           context: (context),
+  //           builder: (context) => AlertDialog(
+  //                 title: Text('Сообщение'),
+  //                 content: Text('Успешно!'),
+  //                 actions: <Widget>[
+  //                   MaterialButton(color: Colors.black54,
+  //                   onPressed: () {
+  //                     Navigator.pop(context);
+  //                   },child: Text("Закрыть"),)
+  //                 ],));
+  //       print(userData);
+  //     } 
+  //   }
+  // }
 
   bool isHidenPassword = true;
 
@@ -46,7 +90,6 @@ class _LoginFormState extends State<LoginForm> {
               ),
               controller: _passwordController,
               maxLength: 30,
-              
               decoration: InputDecoration(
                 icon: const Icon(Icons.lock),
                 labelText: "Password",
@@ -63,7 +106,14 @@ class _LoginFormState extends State<LoginForm> {
             const SizedBox(
               height: 20,
             ),
-            ButtonWidget(
+            ElevatedButton(
+              onPressed: () {
+                if(_loginController.text == 't' || _passwordController.text == 't'){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => StartPage()));
+                }
+                // login();
+              },
+              child: Text('Log In'),
             )
           ],
         ),
@@ -76,32 +126,20 @@ class _LoginFormState extends State<LoginForm> {
       isHidenPassword = !isHidenPassword;
     });
   }
+}
+// class ButtonWidget extends StatelessWidget {
+//   const ButtonWidget({Key key}) : super(key: key);
 
-  Future<void> _showMyDialog() async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Ошибка'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              const Text('Неверные данные'),
-              
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//         child: MaterialButton(
+//       color: Colors.grey.shade400,
+//       onPressed: () {
+//       },
+//       child: Text(
+//         'Log In',
+//       ),
+//     ));
+//   }
+// }

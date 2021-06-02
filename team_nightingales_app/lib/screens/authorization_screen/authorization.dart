@@ -23,7 +23,6 @@ class Authorization extends StatelessWidget {
             children: <Widget>[
               CurvedWidget(
                 child: Container(
-                  
                   width: double.infinity,
                   height: 350,
                   decoration: BoxDecoration(
@@ -42,21 +41,22 @@ class Authorization extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(left: 10.0),
                         child: const Text(
-                          
                           'Sign In',
                           style: TextStyle(
-                            fontSize: 60,
+                            fontSize: 40,
                             color: Color(0xff333030),
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(bottom: 50.0),
+                          margin: EdgeInsets.only(bottom: 50.0),
                           decoration: BoxDecoration(
                             color: Colors.transparent,
                           ),
-                          child: Center(child: Image.asset('assets/logo.png',
-                          height: 270.0,
+                          child: Center(
+                              child: Image.asset(
+                            'assets/logo.png',
+                            height: 270.0,
                           ))),
                     ],
                   ),

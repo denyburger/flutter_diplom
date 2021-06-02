@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
                width: 400,
                child: Image.asset('assets/logo.png')),
            ),
-           Text('Welcome, Artour',
+           Text('Добро пожаловать',
            style: TextStyle(
              fontSize: 20.0
            ),)
