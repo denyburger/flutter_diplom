@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "104876167810",
+    "project_id": "team-nightingales",
+    "storage_bucket": "team-nightingales.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104876167810:android:73bb75e95196d4840fda9b",
+        "android_client_info": {
+          "package_name": "com.nightingales.team"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "104876167810-bhpp3fvme0797hj7hnkh3euoq15jph0e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv3xCEDkXXXQuV_Jp3WON3CM5RDGHHQBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "104876167810-bhpp3fvme0797hj7hnkh3euoq15jph0e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,9 +12,9 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade500,
-       body: Center(
-         child: Text('This is 123 Page'),
-       ),
+      body: Center(
+        child: Text('This is Page'),
+      ),
     );
   }
 }

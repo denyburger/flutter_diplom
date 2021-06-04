@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_nightingales_app/screens/authorization_screen/components/auth.dart';
 import 'package:team_nightingales_app/screens/home_screen.dart';
 
 import '../home_screen.dart';
@@ -9,6 +10,7 @@ class StartPage extends StatefulWidget {
   StartPage({Key key}) : super(key: key);
 
   @override
+
   _StartPageState createState() => _StartPageState();
 }
 
@@ -20,6 +22,7 @@ final List<Widget> _children = [
 ];
 
 class _StartPageState extends State<StartPage> {
+  // String currentemailuser = AuthClass().streamUser.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +61,7 @@ class _StartPageState extends State<StartPage> {
           child: ListView(
             children: <Widget>[
               UserAccountsDrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade400
-                ),
+                  decoration: BoxDecoration(color: Colors.grey.shade400),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.grey.shade300,
                     child: ClipOval(
@@ -72,16 +73,19 @@ class _StartPageState extends State<StartPage> {
                       ),
                     ),
                   ),
-                  accountName: Text('Klement Ivanov',style: TextStyle(color: Colors.black),),
-                  accountEmail: Text('ivanov13@gmail.com', style: TextStyle(color: Colors.black))),
-                  ListTile(
-                    onTap: () {
-                      
-                    },
-                    leading: Icon(Icons.home),
-                    title: Text('Домой',
-                    style: TextStyle(fontSize: 15, color: Colors.black87),)
+                  accountName: Text(
+                    'Klement Ivanov',
+                    style: TextStyle(color: Colors.black),
                   ),
+                  accountEmail: Text('ivanov13@gmail.com',
+                      style: TextStyle(color: Colors.black))),
+              ListTile(
+                  onTap: () {},
+                  leading: Icon(Icons.home),
+                  title: Text(
+                    'Домой',
+                    style: TextStyle(fontSize: 15, color: Colors.black87),
+                  )),
             ],
           ),
         ),
