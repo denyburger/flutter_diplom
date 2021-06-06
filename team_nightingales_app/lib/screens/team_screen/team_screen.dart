@@ -11,9 +11,9 @@ class TeamPage extends StatefulWidget {
 class _TeamPageState extends State<TeamPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade500,
-       body: Body(
+    return Container(
+      color: Colors.grey.shade500,
+       child: Body(
        ),
     );
   }

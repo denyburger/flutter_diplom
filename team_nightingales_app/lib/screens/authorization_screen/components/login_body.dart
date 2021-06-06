@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:team_nightingales_app/screens/home_screen.dart';
+import 'package:team_nightingales_app/customs/customRoute.dart';
 import 'package:team_nightingales_app/screens/start_screen/start.dart';
 
 import 'auth.dart';
@@ -23,16 +23,22 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(40.0),
-      child: Form(
-        child: Column(
-          children: <Widget>[
-            TextFormField(
+    return Form(
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: TextField(
+              cursorColor: Colors.black,
               controller: _loginController,
               maxLength: 30,
               decoration: InputDecoration(
-                icon: const Icon(Icons.login),
+                labelStyle: TextStyle(color: Colors.black87),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black87),
+                    borderRadius: BorderRadius.circular(15)),
+                icon: const Icon(Icons.login, color: Colors.black87),
                 labelText: "Login",
                 counterText: "",
                 border: OutlineInputBorder(
@@ -40,42 +46,64 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: TextField(
+              cursorColor: Colors.black87,
               style: const TextStyle(
-                color: Colors.amber,
+                color: Colors.black,
               ),
               controller: _passwordController,
               maxLength: 30,
               decoration: InputDecoration(
-                icon: const Icon(Icons.lock),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black87),
+                    borderRadius: BorderRadius.circular(15)),
+                labelStyle: TextStyle(color: Colors.black87),
+                icon: const Icon(
+                  Icons.lock,
+                  color: Colors.black87,
+                ),
                 labelText: "Password",
                 counterText: "",
                 suffixIcon: InkWell(
                     onTap: _togglePasswordView,
-                    child: const Icon(Icons.visibility)),
+                    child: const Icon(
+                      Icons.visibility,
+                      color: Colors.black87,
+                    )),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
               obscureText: isHidenPassword,
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () async{
-                UserModel loginUser = await AuthClass().authMethod(_loginController.text, _passwordController.text);
-                if(loginUser !=null){
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => StartPage()));
-                }
-              },
-              child: Text('Log In'),
-            )
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: Colors.blueGrey[700],
+                textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                )),
+            onPressed: () async {
+              UserModel loginUser = await AuthClass()
+                  .authMethod(_loginController.text, _passwordController.text);
+              // if (loginUser != null) {
+              //   Navigator.push(
+              //       context, MyRoute(builder: (context) => StartPage()));
+              // }
+            },
+            child: Text('Log In'),
+          )
+        ],
       ),
     );
   }

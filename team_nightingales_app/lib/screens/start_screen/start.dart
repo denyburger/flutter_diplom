@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:team_nightingales_app/screens/authorization_screen/components/auth.dart';
 import 'package:team_nightingales_app/screens/home_screen.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../home_screen.dart';
 import '../news_screen.dart';
 import '../team_screen/team_screen.dart';
@@ -10,19 +11,18 @@ class StartPage extends StatefulWidget {
   StartPage({Key key}) : super(key: key);
 
   @override
-
   _StartPageState createState() => _StartPageState();
 }
 
-int _currentIndex = 0;
-final List<Widget> _children = [
-  HomePage(),
-  NewsPage(),
-  TeamPage(),
-];
-
 class _StartPageState extends State<StartPage> {
-  // String currentemailuser = AuthClass().streamUser.
+  UserModel _userModel;
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    SingleChildScrollView(child: HomePage()),
+    SingleChildScrollView(child: NewsPage()),
+    SingleChildScrollView(child: TeamPage()),
+  ];
+  AuthClass auth = AuthClass();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,24 +61,38 @@ class _StartPageState extends State<StartPage> {
           child: ListView(
             children: <Widget>[
               UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(color: Colors.grey.shade400),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundColor: Colors.grey.shade300,
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/klement.png',
-                        fit: BoxFit.cover,
-                        width: 90,
-                        height: 90,
-                      ),
+                decoration: BoxDecoration(color: Colors.grey.shade400),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.grey.shade300,
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/klement.png',
+                      fit: BoxFit.cover,
+                      width: 90,
+                      height: 90,
                     ),
                   ),
-                  accountName: Text(
-                    'Klement Ivanov',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  accountEmail: Text('ivanov13@gmail.com',
-                      style: TextStyle(color: Colors.black))),
+                ),
+                accountName: Text(
+                  'Klement Ivanov',
+                  style: TextStyle(color: Colors.black),
+                ),
+                accountEmail: Text('ivanov13@gmail.com',
+                    style: TextStyle(color: Colors.black)),
+                otherAccountsPictures: [
+                  CupertinoButton(
+                      child: Icon(
+                        Icons.logout_rounded,
+                        color: Colors.blueGrey[800],
+                      ),
+                      onPressed: () async {
+                        _userModel = await auth.logout();
+                        if(_userModel == null){
+                          Navigator.pop(context);
+                        }
+                      })
+                ],
+              ),
               ListTile(
                   onTap: () {},
                   leading: Icon(Icons.home),

@@ -10,9 +10,9 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade500,
-      body: Center(
+    return Container(
+      color: Colors.grey.shade500,
+      child: Center(
         child: Text('This is Page'),
       ),
     );

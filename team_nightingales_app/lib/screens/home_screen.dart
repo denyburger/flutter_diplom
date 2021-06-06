@@ -10,9 +10,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade500,
-      body: Column(
+    return Container(
+      color: Colors.grey.shade500,
+      child: Column(
         children: [
           Center(
             child: Container(width: 400, child: Image.asset('assets/logo.png')),
