@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:team_nightingales_app/customs/customRoute.dart';
 import 'package:team_nightingales_app/screens/authorization_screen/components/auth.dart';
 import 'package:team_nightingales_app/screens/home_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:team_nightingales_app/screens/todo_screen/todo_screen.dart';
 import '../home_screen.dart';
 import '../news_screen.dart';
 import '../team_screen/team_screen.dart';
@@ -15,12 +16,13 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
+  AuthClass _authClass = AuthClass();
   UserModel _userModel;
   int _currentIndex = 0;
   final List<Widget> _children = [
     SingleChildScrollView(child: HomePage()),
     SingleChildScrollView(child: NewsPage()),
-    SingleChildScrollView(child: TeamPage()),
+    TeamPage(),
   ];
   AuthClass auth = AuthClass();
   @override
@@ -62,23 +64,25 @@ class _StartPageState extends State<StartPage> {
             children: <Widget>[
               UserAccountsDrawerHeader(
                 decoration: BoxDecoration(color: Colors.grey.shade400),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: Colors.grey.shade300,
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/klement.png',
-                      fit: BoxFit.cover,
-                      width: 90,
-                      height: 90,
-                    ),
+                currentAccountPicture: Container(
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://firebasestorage.googleapis.com/v0/b/team-nightingales.appspot.com/o/acc2.png?alt=media&token=c0d88ccb-9890-439d-ab3f-51c5da1e6fc6'),
+                    backgroundColor: Colors.grey.shade300,
+                    // child: ClipOval(
+                    //   child: Image.asset(
+                    //     'assets/klement.png',
+                    //     fit: BoxFit.contain,
+                    //   ),
+                    // ),
                   ),
                 ),
                 accountName: Text(
-                  'Klement Ivanov',
+                  _authClass.currentuseremail(),
                   style: TextStyle(color: Colors.black),
                 ),
-                accountEmail: Text('ivanov13@gmail.com',
-                    style: TextStyle(color: Colors.black)),
+                accountEmail:
+                    Text('Name', style: TextStyle(color: Colors.black)),
                 otherAccountsPictures: [
                   CupertinoButton(
                       child: Icon(
@@ -87,17 +91,20 @@ class _StartPageState extends State<StartPage> {
                       ),
                       onPressed: () async {
                         _userModel = await auth.logout();
-                        if(_userModel == null){
+                        if (_userModel == null) {
                           Navigator.pop(context);
                         }
                       })
                 ],
               ),
               ListTile(
-                  onTap: () {},
-                  leading: Icon(Icons.home),
+                  onTap: () {
+                    Navigator.push(
+                        context, MyRoute(builder: (context) => TodoPage()));
+                  },
+                  leading: Icon(Icons.task_alt_rounded),
                   title: Text(
-                    'Домой',
+                    'Задачи',
                     style: TextStyle(fontSize: 15, color: Colors.black87),
                   )),
             ],

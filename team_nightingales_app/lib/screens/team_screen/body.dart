@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_nightingales_app/customs/customRoute.dart';
 import 'package:team_nightingales_app/models/player.dart';
 
 import 'details_screen/details_screen.dart';
@@ -30,7 +31,7 @@ class Body extends StatelessWidget {
                       player: players[index],
                       press: () => Navigator.push(
                           context,
-                          MaterialPageRoute(
+                          MyRoute(
                             builder: (context) => DetailsPage(
                               player: players[index],
                             ),

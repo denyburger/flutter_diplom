@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:team_nightingales_app/models/player.dart';
-import 'package:team_nightingales_app/screens/team_screen/body.dart';
+
 
 class DetailsPage extends StatelessWidget {
   final Player player;

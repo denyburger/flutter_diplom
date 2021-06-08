@@ -22,6 +22,10 @@ class AuthClass{
   Future logout() async{
       return await auth.signOut();
     }
+    currentuseremail(){
+      String email = auth.currentUser.email.toString();
+      return email;
+    }
   }
 
 class UserModel{
