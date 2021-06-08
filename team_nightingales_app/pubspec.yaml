@@ -70,6 +70,12 @@ flutter:
     - assets/images/loda.png
     - assets/images/miraclew.png
     - assets/images/s4.png
+    - assets/images/bukovel.png
+    - assets/images/epic.png
+    - assets/images/int.png
+    - assets/images/madmoon.png
+    - assets/images/oga2.png
+    - assets/images/wesave.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

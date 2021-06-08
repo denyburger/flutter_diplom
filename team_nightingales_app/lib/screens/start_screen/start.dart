@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:team_nightingales_app/customs/customRoute.dart';
+import 'package:team_nightingales_app/screens/achievments_screen/achievments_screen.dart';
 import 'package:team_nightingales_app/screens/authorization_screen/components/auth.dart';
 import 'package:team_nightingales_app/screens/home_screen.dart';
 import 'package:team_nightingales_app/screens/todo_screen/todo_screen.dart';
 import '../home_screen.dart';
-import '../news_screen.dart';
 import '../team_screen/team_screen.dart';
 
 class StartPage extends StatefulWidget {
@@ -21,7 +21,7 @@ class _StartPageState extends State<StartPage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     SingleChildScrollView(child: HomePage()),
-    SingleChildScrollView(child: NewsPage()),
+    SingleChildScrollView(child: AchievmentsPage()),
     TeamPage(),
   ];
   AuthClass auth = AuthClass();
@@ -43,8 +43,8 @@ class _StartPageState extends State<StartPage> {
               label: 'Домой',
               backgroundColor: Colors.grey.shade600),
           BottomNavigationBarItem(
-              icon: Icon(Icons.notes_outlined),
-              label: 'Новости',
+              icon: Icon(Icons.auto_stories_outlined),
+              label: 'Достижения',
               backgroundColor: Colors.grey.shade600),
           BottomNavigationBarItem(
               icon: Icon(Icons.people_alt),

@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:team_nightingales_app/customs/customRoute.dart';
-import 'package:team_nightingales_app/screens/start_screen/start.dart';
-
 import 'auth.dart';
 
 class LoginForm extends StatefulWidget {
