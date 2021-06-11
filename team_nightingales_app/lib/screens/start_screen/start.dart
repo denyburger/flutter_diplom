@@ -4,7 +4,7 @@ import 'package:team_nightingales_app/customs/customRoute.dart';
 import 'package:team_nightingales_app/screens/achievments_screen/achievments_screen.dart';
 import 'package:team_nightingales_app/screens/authorization_screen/components/auth.dart';
 import 'package:team_nightingales_app/screens/home_screen.dart';
-import 'package:team_nightingales_app/screens/todo_screen/todo_screen.dart';
+import 'package:team_nightingales_app/tasks_screen/tasks.dart';
 import '../home_screen.dart';
 import '../team_screen/team_screen.dart';
 
@@ -21,7 +21,7 @@ class _StartPageState extends State<StartPage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     SingleChildScrollView(child: HomePage()),
-    SingleChildScrollView(child: AchievmentsPage()),
+    AchievPage(),
     TeamPage(),
   ];
   AuthClass auth = AuthClass();
@@ -100,7 +100,7 @@ class _StartPageState extends State<StartPage> {
               ListTile(
                   onTap: () {
                     Navigator.push(
-                        context, MyRoute(builder: (context) => TodoPage()));
+                        context, MyRoute(builder: (context) => TasksPage()));
                   },
                   leading: Icon(Icons.task_alt_rounded),
                   title: Text(

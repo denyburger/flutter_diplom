@@ -13,8 +13,7 @@ class _TeamPageState extends State<TeamPage> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey.shade500,
-       child: Body(
-       ),
+      child: Body(),
     );
   }
 }

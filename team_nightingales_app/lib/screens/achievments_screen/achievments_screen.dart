@@ -1,104 +1,128 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:team_nightingales_app/screens/achievments_screen/conts.dart';
 
-class AchievmentsPage extends StatefulWidget {
-  const AchievmentsPage({Key key}) : super(key: key);
-
-  @override
-  _AchievmentsPageState createState() => _AchievmentsPageState();
-}
-
-class _AchievmentsPageState extends State<AchievmentsPage> {
-  ScrollController controller = ScrollController();
-  bool closeTopContainer = false;
-  double topContainer = 0;
-
-  List<Widget> achievmentData = [];
-
-  void getAchievmentsData() {
-    List<dynamic> achevList = Achievments_Data;
-    List<Widget> listItems = [];
-    achevList.forEach((post) {
-      listItems.add(Container(
-          height: 150,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-              ]),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      post["name"],
-                      style: const TextStyle(
-                          fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      post["year"],
-                      style: const TextStyle(fontSize: 17, color: Colors.grey),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "${post["place"]}",
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                Image.asset(
-                  "assets/images/${post["image"]}",
-                  height: double.infinity,
-                )
-              ],
-            ),
-          )));
-    });
-    setState(() {
-      achievmentData = listItems;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getAchievmentsData();
-    controller.addListener(() {
-      double value = controller.offset / 119;
-
-      setState(() {
-        topContainer = value;
-        closeTopContainer = controller.offset > 50;
-      });
-    });
-  }
+class AchievPage extends StatelessWidget {
+  AchievPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Expanded(
-          child: ListView.builder(
-        controller: controller,
-        itemCount: achievmentData.length,
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Align(
-              alignment: Alignment.topCenter,
-              heightFactor: 0.7,
-              child: achievmentData[index]);
-        },
-      )),
-    );
-}
+    return Scaffold(
+        backgroundColor: Colors.grey.shade400,
+        body: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection('Achievments')
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return ListView(
+                children: snapshot.data.docs.map((document) {
+                  return Card(
+                    color: Colors.blueGrey[200],
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    elevation: 5,
+                    margin: EdgeInsets.all(15),
+                    child: Row(
+                      children: <Widget>[
+                        Column(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.all(20),
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.17,
+                                child: Image.network(
+                                  document['image'],
+                                  fit: BoxFit.fill,
+                                ))
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              document['name'],
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(document['year']),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.03),
+                            Text(document['place']),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                }).toList(),
+              );
+            }));
+
+    // Query ach = FirebaseFirestore.instance
+    //     .collection('Achievments')
+    //     .orderBy('id', descending: true);
+    // return StreamBuilder<QuerySnapshot>(
+    //   stream: ach.snapshots(),
+    //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    //     if (snapshot.hasError) {
+    //       return Text('Пожалуйста, подождите...');
+    //     }
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return Center(
+    //         child: CircularProgressIndicator(
+    //           valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey[400]),
+    //         ),
+    //       );
+    //     }
+
+    //     return new NestedScrollView(
+    //       headerSliverBuilder: (BuildContext context, bool innerBoxScrolled) {
+    //         return <Widget>[
+    //           SliverAppBar(
+    //             snap: true,
+    //             floating: true,
+    //             backgroundColor: Colors.transparent,
+    //             automaticallyImplyLeading: false,
+    //             elevation: 0,
+    //             flexibleSpace: FlexibleSpaceBar(
+    //               titlePadding: EdgeInsets.all(1),
+    //               centerTitle: true,
+    //               collapseMode: CollapseMode.pin,
+    //               title: ClipRRect(
+    //                 borderRadius: BorderRadius.all(Radius.circular(20)),
+    //                 child: Container(
+    //                   color: Colors.blueGrey[400],
+    //                   padding:
+    //                       EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    //                   child: Text(
+    //                     'Достижения',
+    //                     style: TextStyle(color: Colors.white70),
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         ];
+    //       },
+    //       body: ListView(
+    //         padding: EdgeInsets.only(top: 50),
+    //         physics: BouncingScrollPhysics(),
+    //         children: snapshot.data.docs.map(
+    //           (DocumentSnapshot document) {
+    //             return Container(
+    //               child: Center(
+    //                 child: Text(document['name']),
+    //               ),
+    //             );
+    //           }).toList(),
+    //       ),
+    //     );
+    //   },
+    // );
+  }
 }
