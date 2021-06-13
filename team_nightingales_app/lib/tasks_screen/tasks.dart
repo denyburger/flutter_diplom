@@ -16,37 +16,35 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade400,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Задачи',
-          style: TextStyle(color: Colors.white),
+        backgroundColor: Colors.grey.shade400,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            'Задачи',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.grey.shade600,
         ),
-        backgroundColor: Colors.grey.shade600,
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade600,
-        child: Container(
-          child: Row(children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(5.0),
-              child: FloatingActionButton(
-                backgroundColor: Colors.blueGrey,
-                child: Icon(Icons.add),
-                onPressed: () {
-                  Navigator.push(
-                      context, MyRoute(builder: (context) => AddTaskPage()));
-                },
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.grey.shade600,
+          child: Container(
+            child: Row(children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(5.0),
+                child: FloatingActionButton(
+                  backgroundColor: Colors.blueGrey,
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    Navigator.push(
+                        context, MyRoute(builder: (context) => AddTaskPage()));
+                  },
+                ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
-      ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-                .collection('Tasks')
-                .snapshots(),
+        body: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('Tasks').snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) {
@@ -58,8 +56,6 @@ class _TasksPageState extends State<TasksPage> {
                 children: snapshot.data.docs.map((document) {
                   return Card(
                     color: Colors.blueGrey[200],
-                    // shape: RoundedRectangleBorder(
-                    //     borderRadius: BorderRadius.circular(10.0)),
                     elevation: 5,
                     margin: EdgeInsets.all(15),
                     child: Row(

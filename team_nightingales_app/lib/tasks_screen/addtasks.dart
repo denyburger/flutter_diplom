@@ -39,9 +39,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
               validator: (value) {
                 return value.isEmpty ? 'Описание не может быть пустым' : null;
               },
-              // onSaved: (value) {
-              //   return myValue = value;
-              // },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             FloatingActionButton.extended(

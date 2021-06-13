@@ -27,34 +27,82 @@ class AchievPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.0)),
                     elevation: 5,
                     margin: EdgeInsets.all(15),
-                    child: Row(
-                      children: <Widget>[
-                        Column(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.all(20),
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.17,
-                                child: Image.network(
-                                  document['image'],
-                                  fit: BoxFit.fill,
-                                ))
+                    child: Column(
+                      children: [
+                        Row(
+                          children: <Widget>[
+                            Column(
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.all(15),
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.17,
+                                    child: Image.network(
+                                      document['image'],
+                                      fit: BoxFit.fill,
+                                    ))
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  document['name'],
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                Text(document['year']),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.03),
+                                Text(document['place']),
+                              ],
+                            ),
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              document['name'],
-                              style: TextStyle(fontSize: 20),
+                        ExpansionTile(
+                          tilePadding: EdgeInsets.all(3),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      document['description'],
+                                      style: TextStyle(fontSize: 17),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            Text(document['year']),
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.03),
-                            Text(document['place']),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Выиграно: " +
+                                        document['prize'].toString() +
+                                        " \$",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Получено: " +
+                                        document['points'].toString() +
+                                        " DPC-очков",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
+                            )
                           ],
+                          title: Text('Подробнее'),
                         )
                       ],
                     ),
@@ -62,67 +110,5 @@ class AchievPage extends StatelessWidget {
                 }).toList(),
               );
             }));
-
-    // Query ach = FirebaseFirestore.instance
-    //     .collection('Achievments')
-    //     .orderBy('id', descending: true);
-    // return StreamBuilder<QuerySnapshot>(
-    //   stream: ach.snapshots(),
-    //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    //     if (snapshot.hasError) {
-    //       return Text('Пожалуйста, подождите...');
-    //     }
-    //     if (snapshot.connectionState == ConnectionState.waiting) {
-    //       return Center(
-    //         child: CircularProgressIndicator(
-    //           valueColor: AlwaysStoppedAnimation<Color>(Colors.blueGrey[400]),
-    //         ),
-    //       );
-    //     }
-
-    //     return new NestedScrollView(
-    //       headerSliverBuilder: (BuildContext context, bool innerBoxScrolled) {
-    //         return <Widget>[
-    //           SliverAppBar(
-    //             snap: true,
-    //             floating: true,
-    //             backgroundColor: Colors.transparent,
-    //             automaticallyImplyLeading: false,
-    //             elevation: 0,
-    //             flexibleSpace: FlexibleSpaceBar(
-    //               titlePadding: EdgeInsets.all(1),
-    //               centerTitle: true,
-    //               collapseMode: CollapseMode.pin,
-    //               title: ClipRRect(
-    //                 borderRadius: BorderRadius.all(Radius.circular(20)),
-    //                 child: Container(
-    //                   color: Colors.blueGrey[400],
-    //                   padding:
-    //                       EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-    //                   child: Text(
-    //                     'Достижения',
-    //                     style: TextStyle(color: Colors.white70),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //           ),
-    //         ];
-    //       },
-    //       body: ListView(
-    //         padding: EdgeInsets.only(top: 50),
-    //         physics: BouncingScrollPhysics(),
-    //         children: snapshot.data.docs.map(
-    //           (DocumentSnapshot document) {
-    //             return Container(
-    //               child: Center(
-    //                 child: Text(document['name']),
-    //               ),
-    //             );
-    //           }).toList(),
-    //       ),
-    //     );
-    //   },
-    // );
   }
 }

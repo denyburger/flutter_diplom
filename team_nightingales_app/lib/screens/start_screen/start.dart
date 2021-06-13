@@ -69,20 +69,14 @@ class _StartPageState extends State<StartPage> {
                     backgroundImage: NetworkImage(
                         'https://firebasestorage.googleapis.com/v0/b/team-nightingales.appspot.com/o/acc2.png?alt=media&token=c0d88ccb-9890-439d-ab3f-51c5da1e6fc6'),
                     backgroundColor: Colors.grey.shade300,
-                    // child: ClipOval(
-                    //   child: Image.asset(
-                    //     'assets/klement.png',
-                    //     fit: BoxFit.contain,
-                    //   ),
-                    // ),
                   ),
                 ),
                 accountName: Text(
                   _authClass.currentuseremail(),
                   style: TextStyle(color: Colors.black),
                 ),
-                accountEmail:
-                    Text('Name', style: TextStyle(color: Colors.black)),
+                // accountEmail:
+                //     Text('Name', style: TextStyle(color: Colors.black)),
                 otherAccountsPictures: [
                   CupertinoButton(
                       child: Icon(

@@ -56,7 +56,7 @@ class Authorization extends StatelessWidget {
                           child: Center(
                               child: Image.asset(
                             'assets/logo.png',
-                            height: 270.0,
+                            height: MediaQuery.of(context).size.height * 0.35,
                           ))),
                     ],
                   ),
