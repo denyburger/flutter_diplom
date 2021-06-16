@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:team_nightingales_app/customs/customRoute.dart';
 import 'package:team_nightingales_app/screens/achievments_screen/achievments_screen.dart';
 import 'package:team_nightingales_app/screens/authorization_screen/components/auth.dart';
+import 'package:team_nightingales_app/screens/directory_screen/directory_screen.dart';
 import 'package:team_nightingales_app/screens/home_screen.dart';
 import 'package:team_nightingales_app/tasks_screen/tasks.dart';
 import '../home_screen.dart';
@@ -75,8 +76,8 @@ class _StartPageState extends State<StartPage> {
                   _authClass.currentuseremail(),
                   style: TextStyle(color: Colors.black),
                 ),
-                // accountEmail:
-                //     Text('Name', style: TextStyle(color: Colors.black)),
+                accountEmail:
+                    Text('User', style: TextStyle(color: Colors.black)),
                 otherAccountsPictures: [
                   CupertinoButton(
                       child: Icon(
@@ -101,6 +102,17 @@ class _StartPageState extends State<StartPage> {
                     'Задачи',
                     style: TextStyle(fontSize: 15, color: Colors.black87),
                   )),
+              ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context, MyRoute(builder: (context) => DirectoryPage()));
+                },
+                leading: Icon(Icons.book),
+                title: Text(
+                  'Справочник',
+                  style: TextStyle(fontSize: 15, color: Colors.black87),
+                ),
+              )
             ],
           ),
         ),

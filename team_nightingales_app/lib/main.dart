@@ -5,11 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:team_nightingales_app/screens/authorization_screen/authorization.dart';
 import 'package:team_nightingales_app/screens/authorization_screen/components/auth.dart';
 import 'package:team_nightingales_app/screens/start_screen/start.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
   await Firebase.initializeApp();
-  runApp(MyApp());
+  initializeDateFormatting().then((_) => runApp(MyApp()));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
 class Check extends StatelessWidget {

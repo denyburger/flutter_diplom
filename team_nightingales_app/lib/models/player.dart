@@ -1,5 +1,3 @@
-
-
 class Player {
   final int id, age;
   final String name, surname, nickname, position, image, country;
