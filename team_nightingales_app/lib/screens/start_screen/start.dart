@@ -107,11 +107,7 @@ class _StartPageState extends State<StartPage> {
                   Navigator.push(
                       context, MyRoute(builder: (context) => DirectoryPage()));
                 },
-                leading: Icon(Icons.book),
-                title: Text(
-                  'Справочник',
-                  style: TextStyle(fontSize: 15, color: Colors.black87),
-                ),
+                
               )
             ],
           ),

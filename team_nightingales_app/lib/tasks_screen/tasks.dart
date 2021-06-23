@@ -1,3 +1,4 @@
+
 import 'dart:math';
 import 'dart:ui';
 
@@ -100,7 +101,7 @@ class TasksPageState extends State<TasksPage> {
             from: DateFormat('dd/MM/yyyy HH:mm:ss')
                 .parse(e.data()['Время начала']),
             to: DateFormat('dd/MM/yyyy HH:mm:ss')
-                .parse(e.data()['Время конца']),
+                .parse(e.data()['Время окончания']),
             background: _colorCollection[random.nextInt(9)],
             isAllDay: false,
             key: e.id))
@@ -114,95 +115,120 @@ class TasksPageState extends State<TasksPage> {
   Widget build(BuildContext context) {
     isInitialLoaded = true;
     return Scaffold(
-        appBar: AppBar(
-            leading: PopupMenuButton<String>(
-          icon: Icon(Icons.settings),
-          itemBuilder: (BuildContext context) => options.map((String choice) {
-            return PopupMenuItem<String>(
-              value: choice,
-              child: Text(choice),
+      appBar: AppBar(
+          leading: PopupMenuButton<String>(
+        icon: Icon(Icons.settings),
+        itemBuilder: (BuildContext context) => options.map((String choice) {
+          return PopupMenuItem<String>(
+            value: choice,
+            child: Text(choice),
+          );
+        }).toList(),
+        onSelected: (String value) {
+          if (value == 'Добавить') {
+            showDialog(
+              context: context,
+              builder: (context) => Dialog(
+                  child: Container(
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Описание'),
+                      controller: _descriptioncontroller,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Время начала'),
+                      controller: _startcontroller,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Время окончания'),
+                      controller: _endcontroller,
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: () {
+                            if (_descriptioncontroller.text.isEmpty ||
+                                _startcontroller.text.isEmpty ||
+                                _endcontroller.text.isEmpty) {
+                              Fluttertoast.showToast(msg: 'Заполните все поля');
+                            } else {
+                              fireStoreReference
+                                  .collection("Calendar")
+                                  .doc(randomIndex())
+                                  .set({
+                                'Описание': _descriptioncontroller.text,
+                                'Время начала': _startcontroller.text,
+                                'Время конца': _endcontroller.text
+                              });
+                            }
+                            _descriptioncontroller.clear();
+                            _startcontroller.clear();
+                            _endcontroller.clear();
+                            Navigator.pop(context);
+                          },
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            _descriptioncontroller.clear();
+                            _startcontroller.clear();
+                            _endcontroller.clear();
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.cancel),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )),
             );
-          }).toList(),
-          onSelected: (String value) {
-            if (value == 'Добавить') {
-              showDialog(
-                context: context,
-                builder: (context) => Dialog(
-                    child: Container(
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        decoration: InputDecoration(labelText: 'Описание'),
-                        controller: _descriptioncontroller,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(labelText: 'Время начала'),
-                        controller: _startcontroller,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(labelText: 'Время конца'),
-                        controller: _endcontroller,
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () {
-                              if (_descriptioncontroller.text.isEmpty ||
-                                  _startcontroller.text.isEmpty ||
-                                  _endcontroller.text.isEmpty) {
-                                Fluttertoast.showToast(
-                                    msg: 'Заполните все поля');
-                              } else {
-                                fireStoreReference
-                                    .collection("Calendar")
-                                    .doc(randomIndex())
-                                    .set({
-                                  'Описание': _descriptioncontroller.text,
-                                  'Время начала': _startcontroller.text,
-                                  'Время конца': _endcontroller.text
-                                });
-                              }
-                              _descriptioncontroller.clear();
-                              _startcontroller.clear();
-                              _endcontroller.clear();
-                              Navigator.pop(context);
-                            },
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              _descriptioncontroller.clear();
-                              _startcontroller.clear();
-                              _endcontroller.clear();
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(Icons.cancel),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                )),
-              );
-            } else if (value == "Удалить") {
-              try {
-                fireStoreReference
-                    .collection('Calendar')
-                    .doc(_deletecontroller.text)
-                    .delete();
-              } catch (e) {}
-            }
-          },
-        )),
-        body: SfCalendar(
-          view: CalendarView.month,
-          firstDayOfWeek: 1,
-          initialDisplayDate: DateTime.now(),
-          dataSource: events,
-          monthViewSettings: MonthViewSettings(
-            showAgenda: true,
+          } else if (value == "Удалить") {
+            try {
+              fireStoreReference
+                  .collection('Calendar')
+                  .doc(_deletecontroller.text)
+                  .delete();
+            } catch (e) {}
+          }
+        },
+      )),
+      body: Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.7,
+            child: SfCalendar(
+              view: CalendarView.month,
+              firstDayOfWeek: 1,
+              initialDisplayDate: DateTime.now(),
+              dataSource: events,
+              monthViewSettings: MonthViewSettings(
+                showAgenda: true,
+              ),
+            ),
           ),
-        ));
+          // StreamBuilder(
+          //   stream:
+          //       FirebaseFirestore.instance.collection('Calendar').snapshots(),
+          //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+          //     if (!snapshot.hasData) {
+          //       return Center(
+          //         child: CircularProgressIndicator(),
+          //       );
+          //     }
+          //     return Container(
+          //       child: ListView(
+          //         children: snapshot.data.docs.map((doucment) {
+          //           Text(document['Описание'])
+          //         }).toList(),
+          //       ),
+          //     );
+          //   },
+          // ),
+        ],
+      ),
+    );
   }
 
   void _initializeEventColor() {
@@ -242,11 +268,11 @@ class MeetingDataSource extends CalendarDataSource {
   @override
   String getSubject(int index) {
     return appointments[index].eventName;
+  }
 
-    @override
-    Color getColor(int index) {
-      return appointments[index].background;
-    }
+  @override
+  Color getColor(int index) {
+    return appointments[index].background;
   }
 }
 
@@ -272,8 +298,8 @@ class Meeting {
         from: DateFormat('dd/MM/yyyy HH:mm:ss')
             .parse(element.doc.data()['Время начала']),
         to: DateFormat('dd/MM/yyyy HH:mm:ss')
-            .parse(element.doc.data()['Время конца']),
-        background: color,
+            .parse(element.doc.data()['Время окончания']),
+        background: Colors.deepOrange,
         isAllDay: false,
         key: element.doc.id);
   }
